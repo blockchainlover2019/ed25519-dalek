@@ -375,7 +375,7 @@ impl ExpandedSecretKey {
     /// # fn main() { }
     /// ```
     #[inline]
-    pub(crate) fn from_bytes(bytes: &[u8]) -> Result<ExpandedSecretKey, SignatureError> {
+    pub fn from_bytes(bytes: &[u8]) -> Result<ExpandedSecretKey, SignatureError> {
         if bytes.len() != EXPANDED_SECRET_KEY_LENGTH {
             return Err(InternalError::BytesLengthError {
                 name: "ExpandedSecretKey",
@@ -397,7 +397,7 @@ impl ExpandedSecretKey {
 
     /// Sign a message with this `ExpandedSecretKey`.
     #[allow(non_snake_case)]
-    pub(crate) fn sign(&self, message: &[u8], public_key: &PublicKey) -> ed25519::Signature {
+    pub fn sign(&self, message: &[u8], public_key: &PublicKey) -> ed25519::Signature {
         let mut h: Sha512 = Sha512::new();
         let R: CompressedEdwardsY;
         let r: Scalar;
@@ -442,7 +442,7 @@ impl ExpandedSecretKey {
     ///
     /// [rfc8032]: https://tools.ietf.org/html/rfc8032#section-5.1
     #[allow(non_snake_case)]
-    pub(crate) fn sign_prehashed<'a, D>(
+    pub fn sign_prehashed<'a, D>(
         &self,
         prehashed_message: D,
         public_key: &PublicKey,
